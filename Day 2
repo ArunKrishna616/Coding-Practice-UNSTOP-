@@ -1,0 +1,32 @@
+def longest_palindromic_substring_length(S):
+    T = '#' + '#'.join(S) + '#'
+    n = len(T)
+    P = [0] * n
+    C = R = 0  
+    for i in range(n):
+        mirr = 2 * C - i 
+        if i < R:
+            P[i] = min(R - i, P[mirr])
+        a = i + P[i] + 1
+        b = i - P[i] - 1
+        while a < n and b >= 0 and T[a] == T[b]:
+            P[i] += 1
+            a += 1
+            b -= 1
+        if i + P[i] > R:
+            C = i
+            R = i + P[i]
+    return max(P)
+import sys
+input = sys.stdin.read
+data = input().split()
+N = int(data[0])
+S = data[1]
+print(longest_palindromic_substring_length(S))
+
+Input:
+5
+abacc
+
+Output:
+3
